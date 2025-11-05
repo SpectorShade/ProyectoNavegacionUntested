@@ -30,7 +30,7 @@ class ControladorGeneral{
         publicaciones = publicaciones_descargadas
         
         do{
-            try await Task.sleep(for: .seconds(30))
+            try await Task.sleep(for: .seconds(10))
         }
         catch{
             
