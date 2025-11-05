@@ -8,14 +8,14 @@
 import Foundation
 
 class ServicioWeb{
-    func descargar_datos<T: Codable>(url: String) async -> T?{
+    func descargar_datos<TipoDeDato: Codable>(url: String) async -> TipoDeDato?{
         do {
             guard let url = URL(string: url) else { throw ErroresDeRed.url_mala }
             let (datos, respuesta) = try await URLSession.shared.data(from: url)
             guard let respuesta = respuesta as? HTTPURLResponse else { throw ErroresDeRed.respuesta_erronea }
             guard respuesta.statusCode >= 200 && respuesta.statusCode < 300 else { throw ErroresDeRed.estado_negativo }
             
-            guard let respuesta_decodificada = try? JSONDecoder().decode(T.self, from: datos) else { throw ErroresDeRed.falla_al_decodificar_informacion }
+            guard let respuesta_decodificada = try? JSONDecoder().decode(TipoDeDato.self, from: datos) else { throw ErroresDeRed.falla_al_decodificar_informacion }
             
             return respuesta_decodificada
         }
